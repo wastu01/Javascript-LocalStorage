@@ -67,7 +67,7 @@ function updateList()
       }
       ul.innerHTML = str;
       // ${renderList.[i]}
-      console.log(renderList);
+      // console.log(renderList);
 
       document.getElementById('Count').innerHTML = len;
 
@@ -166,7 +166,7 @@ btn[3].addEventListener("click", DelList, false);
         if (books.length==0 ) {
 
           console.log(books);
-          alert('無法執行\n沒資料要刪蝦咪啦');
+          alert('首次無法執行\n沒資料要刪蝦咪啦');
           return;
         
       }
@@ -176,7 +176,7 @@ btn[3].addEventListener("click", DelList, false);
       
       if(renderList.length==0 ){
 
-        alert('前三本不給泥刪\n只刪你新增的啦');
+        alert('無法執行\n沒資料要刪蝦咪啦');
 
       }else{
 
@@ -243,7 +243,7 @@ function Clear(message, className){
     title: '新增作業失敗',
     text: '請輸入正確的格式，已避免系統被玩壞哦！',
     html:
-    '請 在 <b>確 認</b> 一 次 你 有 輸 入 內 容 (╯°Д°）╯' ,
+    '請 再 <b>確 認</b> 一 次 你 有 輸 入 內 容 (╯°Д°）╯' ,
     confirmButtonText:
     '好哦我了解 <i class="fa fa-thumbs-up"></i>',
     confirmButtonAriaLabel: 'understand',
