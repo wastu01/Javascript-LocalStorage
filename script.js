@@ -5,6 +5,7 @@ var input = document.querySelector("#input")
 // 綁定 input id
 // console.log(input)
 
+
 var btnall = ["新增","顯示","載入","移除","編號","清除"]
 var btn = document.querySelectorAll(".btn")
 
@@ -17,14 +18,14 @@ btnall.forEach(function(e,i,a){
 // 元素值，索引，本身
 console.log(btnall)
 
-// 綁定多個按鈕 ID
-
-var number;
-// 計算li清單數量
+// 綁定多個按鈕並設置value 監聽
 
 var ul = document.querySelector('#list');
 // 綁定 ul 清單 #list
 // .list 拿去當 class 樣板了
+
+// var number;
+// 計算li清單數量
 
 var li;
 // 『新增 li element 』的變數
@@ -34,6 +35,8 @@ var li;
 // localStorage.setItem('data', JSON.stringify(data));
 
 var getOldData = localStorage.getItem("data");
+// 取得 cookie 資料
+
 var books = "";
 
 function getBooks(){
@@ -44,17 +47,24 @@ function getBooks(){
   }
   // return books;
 }
-getBooks()
+getBooks();
+
+// 如果 cookie 有資料，字串轉陣列放進 books，無則空陣列
 
 var renderList = books;
 
+// 變數 
+
 updateList();
+
+//必先執行一次並顯示出來清單，陣列空則無元素
 
 function updateList()
 
     {
       
       var len = renderList.length;
+      // 存放目前陣列數量
       var str = "";
       for(var i = 0; i < len; i++){
         str += `
@@ -66,30 +76,44 @@ function updateList()
         </li>`;
       }
       ul.innerHTML = str;
-      // ${renderList.[i]}
+      // ${renderList.[i]} 字串內包含變數
       // console.log(renderList);
 
       document.getElementById('Count').innerHTML = len;
 
       var renderListStr = JSON.stringify(renderList);
       localStorage.setItem("data",renderListStr);
+      // 陣列轉字串
+      // 存進 cookie 
 
     }
+    //  <a data-num=${i}>
+    // 排序資料，刪除定位用
 
 
 btn[0].addEventListener("click", Newlist, false);
+// 事件 執行函式 冒泡？點擊
 
     //新增資料
     function Newlist() {
       
       var text = input.value;
+      //存放輸入字串
       if(text == ""){
         alertTest();
         return;
       }
+      //判定是否輸入
+
       renderList.push(text);
+      //字串加入陣列
+
       input.value = "";
+      //清空輸入值
+
       updateList();
+      // 重新計算陣列數量
+
         // li = document.createElement('li');
         // li.setAttribute('class', 'item');
         // li.textContent = input.value;
@@ -105,11 +129,12 @@ btn[1].addEventListener("click", Show, false);
   function Show(){
     var render = document.getElementById('render');
     var show = document.getElementById('show');
+    // show 按鈕， render 清單區塊
 
     if (render.style.display === 'none') {
       render.style.display = 'block';
       show.innerText = "隱藏";
-      // number = document.querySelectorAll("ul li");
+     
     }
     else {
       render.style.display = 'none';
@@ -118,6 +143,7 @@ btn[1].addEventListener("click", Show, false);
 
     }
     updateList();
+    //重新計算清單數量 （in fact 多此一舉）
 
   }
 
@@ -129,23 +155,27 @@ btn[2].addEventListener("click", DefaultList, false);
       var defaults = document.getElementById('default');
 
       ul.setAttribute('class', 'wrap');
-      var t;
+      // 建立版型 多此一舉
+
       var original = ["網頁設計", "物聯網設計" , "CSS版型設計" , "數位學習系統" ]; 
 
       var flag = false;
 
+      // false 但 true 
+
       if (flag == false) {
 
       defaults.disabled=true;
+      // 不能連續點擊
       defaults.innerText = "資料已載入";
-        
-      document.getElementById("default").disabled=true;
 
       var mix = [...renderList, ...original]
 
       renderList =  mix;
+      //合併陣列語法 最新的？
 
       }
+      // 接續一定會執行
       flag = true;
     
             setTimeout(function () {
@@ -153,8 +183,10 @@ btn[2].addEventListener("click", DefaultList, false);
                 defaults.innerText = "再次載入資料";
                 flag = false;
             }, 5000);
+            // 計時5000毫秒才執行，解鎖按鈕
       
       updateList();
+      //重新計算清單數量 
       
     }
 
@@ -166,21 +198,21 @@ btn[3].addEventListener("click", DelList, false);
         if (books.length==0 ) {
 
           console.log(books);
-          alert('首次無法執行\n沒資料要刪蝦咪啦');
+          alert('error無法執行');
           return;
         
+          //資料為空
       }
-      else {
-
-      }
-      
-      if(renderList.length==0 ){
+      else if(renderList.length==0 ){
 
         alert('無法執行\n沒資料要刪蝦咪啦');
+
 
       }else{
 
         renderList.pop();
+
+        //刪除末項
         
         updateList();
 
@@ -190,27 +222,30 @@ btn[3].addEventListener("click", DelList, false);
 btn[4].addEventListener("click", SortList, false);
 
 
-// 中文排序會依照編碼大小
-// 黑暗執行緒：https://blog.darkthread.net/blog/javascript-chinese-char-sorting/
-
   function SortList() {
     
-    let list = document.querySelector('#list');
-
+    renderList.sort();
+    updateList();
 
   }
 
-  //移除指定
-//      
-//     let list = document.querySelector('#list') // 取得父層容器節點
-// let oldList = document.querySelectorAll('li')[1] // 先選到全部的 li 在用索引值選出我們要指定的
-// list.removeChild(oldList) // 移除我們指定的 oldList
+//純靠輸入方式移除指定行數 
+// 刪除陣列特定位置 input-1
 
-btn[5].addEventListener("click", Clear, false);
+// let ul = document.querySelector('#list') // 取得父層容器節點
+// let oldList = document.querySelectorAll('li')[input-1] // 先選到全部的 li 在用索引值選出我們要指定的
+// ul.removeChild(oldList) // 移除我們指定的 oldList
+
+// 上面幾行替換成 
+// list.innerHTML = '';
+// console.log(li.length);
+// updateList();
+// 先刪除重排
+
+// btn[5].addEventListener("click", Clear(), false);
 
 
-// Clear('已將移除', 'success');
-function Clear(message, className){
+function Clear(){
 
 
 
@@ -221,19 +256,62 @@ function Clear(message, className){
   
   div.classList.add("list", "alert");
 
-  div.className = `alert alert-${className}`;
-  div.appendChild(document.createTextNode(message));
-  div.innerText = "您刪除了"+ li.length +"本";
-  
-  let IO = document.querySelector('#IO');
-  let parentDiv = document.querySelector('.parentDiv');
+  // div.className = `alert alert-${className}`;
+  // div.appendChild(document.createTextNode(message));
 
-  // parentDiv.insertBefore(div, IO);
-  //容器.insert(要放的,基準點)
+  // div.innerText = "您刪除了"+ li.length +"本";
+  
+ 
+ 
+
+  showAlert('移除', 'alert', renderList.length);
+
   list.innerHTML = '';
   console.log(li.length);
 }
 
+
+// add / del message
+function showAlert(message, className, number) {
+
+  const li   = document.querySelectorAll('.item');
+  const div = document.createElement('div');
+  
+  div.className = `alert alert-${className} text-center`;
+  div.appendChild(document.createTextNode(message));
+  div.innerText +=  number +"本";
+
+  let IO = document.querySelector('#IO');
+  let parentDiv = document.querySelector('.parentDiv');
+  
+  //容器.insert(要放的,基準點)
+  parentDiv.insertBefore(div, IO);
+  //  容器，元素，位置
+  // parentDiv.appendChild(IO);
+
+  
+
+  // Vanish in 3 seconds
+  var intervalid = setTimeout( 'Seconds()', 5000);
+  const alert = document.getElementsByClassName('alert');
+  console.log(alert);
+
+}
+function Seconds(){
+  
+  const alert = document.getElementsByClassName('alert');
+
+  alert[0].remove();  
+  // for ( var i=0; i < alert.length; i++){
+  //   console.log(alert[i].innerHTML);
+  //   alert[i].remove();
+    
+  //   return;
+
+  // }
+ 
+
+}
 
 // alert 顯示
 
