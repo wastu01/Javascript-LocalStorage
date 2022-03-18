@@ -6,25 +6,13 @@ todolost 儲存資料至 cookie
 
 <hr>
 
-未實現 : 刪除特定資料，查詢特定書籍，排序資料
+未實現 : 刪除特定資料，查詢特定書籍
 
 刪除特定有想法沒做完，每個資料設置 `data* `
 
-查詢跟排序感覺有點難度，要想想。
+查詢感覺有難度，要想想。
 
-```javascript
-尚待驗證可行性 nodelist
-var number = query.selectAll(ul li);
-var numberText = [];
-
-newnumber = number.sort(); //方法一
-
-for (i = 0, i < number.length, i++){
-	numberText += number[i]  //方法二
-}
-numberText.sort();
-```
-歡迎發 issue 提示我這個新手
+歡迎發 issue 協助 ：）
 
 <hr>
 
