@@ -1,6 +1,6 @@
 # Javascript-LocalStorage
  
-todolost 儲存資料至 cookie
+todolist 儲存資料至 cookie
 
 邏輯順序：按下按鈕若判定符合條件觸發，` localstorage` 若有資料撈出來，存進 number，再 count 重新計算幾個物件清單顯示。
 
