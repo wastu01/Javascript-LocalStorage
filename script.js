@@ -274,7 +274,7 @@ function alertTest() {
     html: "請 再 <b>確 認</b> 一 次 你 有 輸 入 內 容 (╯°Д°）╯",
     confirmButtonText: '好哦我了解 <i class="fa fa-thumbs-up"></i>',
     confirmButtonAriaLabel: "understand",
-    footer: '<a href="https://itechdct.ntcu.edu.tw/ntcudct_courses/DigitalCommunication/11024/show_web_write.aspx?ftp_dir=3_class/&pathname=03_2_array_for_list" target=”_blank”>為何會出現此訊息？你說呢？</a>',
+    footer: '<a href="javascript:location.reload()">點擊重新整理此頁面</a>',
   });
 }
 
